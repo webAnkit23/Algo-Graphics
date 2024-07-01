@@ -98,3 +98,30 @@ background: linear-gradient(to right, #93EDC7, #1CD8D2); /* W3C, IE 10+/ Edge, F
     }
     
 }
+.bar{
+    --max :20;
+    --height :40;
+    animation: barAnimate 1s cubic-bezier(0.19, 1, 0.22, 1) ;
+    animation-fill-mode: forwards;
+    transform-origin: bottom;
+}
+@keyframes barAnimate {
+    0%{
+        transform: scaleY(0);
+    }    
+    100%{
+        transform: scaleY(1);
+    }
+}
+
+
+.activeBar{
+    background-color: #93EDC7;
+    transform: scale(1.02);
+}
+.sortedBar{
+    background-color: rgb(156, 222, 3);
+}
+.swappedBar{
+    background-color: rgb(0, 192, 160);
+}

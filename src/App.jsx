@@ -15,10 +15,12 @@ function App() {
             </div>
 
 
-            <MazePage />
-
+           <MazePage />
             <SortingPage />
+
+            <div className='text-center mt-20 border-2 text-[30px] font-semibold text-red-500'>More Algorithms Coming Soon</div>
        </div>
+
 
     </div>
       

@@ -8,14 +8,14 @@ export default function MazeBox() {
     const [contextMenu ,setContextMenu] = useState(false);
     const handleMouseDown =(row ,col,e)=>{
 
-
+      e.preventDefault();
       if(inprocess||maze[row][col].isStart||maze[row][col].isEnd)return;
         if(e.button==0){
         setMouseDown(true);
          setMaze(createNewGrid(maze , row,col));
         }
         else{
-          e.preventDefault();
+          
           setContextMenu(true);
           if(!maze[row][col].isWall){
           setMaze(addWeight(maze,row,col));
@@ -23,7 +23,8 @@ export default function MazeBox() {
         }
       
     }
-   function handleMouseEnter(row,col){
+   function handleMouseEnter(row,col,e){
+    e.preventDefault();
     if(inprocess||maze[row][col].isStart||maze[row][col].isEnd)return;
        if(mouseDown){
         setMaze(createNewGrid(maze , row,col));
@@ -34,7 +35,8 @@ export default function MazeBox() {
        }
 
    }
-   function handleMouseUp(row,col){
+   function handleMouseUp(row,col,e){
+    e.preventDefault();
     if(inprocess||maze[row][col].isStart||maze[row][col].isEnd)return;
     setMouseDown(false);
     setContextMenu(false);
@@ -53,9 +55,10 @@ export default function MazeBox() {
               {row.map((ele,j)=>{
                 return <span key={j} 
                 id={`rows-${i}&cols-${j}`}
-                onMouseEnter={(e) =>handleMouseEnter(i,j)}
+                onMouseEnter={(e) =>handleMouseEnter(i,j,e)}
                  onMouseDown={(e)=>handleMouseDown(i,j,e)} 
-                 onMouseUp={()=>handleMouseUp(i,j)} 
+                 onMouseUp={(e)=>handleMouseUp(i,j,e)} 
+                 onContextMenu={(e)=> e.preventDefault()}
                  className={`${i==maze.length-1?'border-b-2':""} border-white ${j==maze[i].length-1?'border-r-2':""} ${i==start.row&&j==start.col?"bg-green-500" :""} ${i==end.row&&j==end.col?"bg-red-500":""} ${ele.isWall?"bg-black":""} md:h-[15px] lg:h-[25px] lg:w-[25px] select-none flex items-center text-center justify-center h-[10px] w-[10px] text-[10px] border-l-2 border-t-2 md:w-[15px]`}>{ele.weight==1?"":ele.weight}
                  </span>
               })}

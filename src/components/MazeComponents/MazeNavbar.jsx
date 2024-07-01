@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useRef } from 'react'
 import { useMaze } from './MazeContext'
 import {BFS} from './../../functions/MazeFunctions/MazeAlgorithms/BFS'
 import {DFS} from './../../functions/MazeFunctions/MazeAlgorithms/DFS'
@@ -7,6 +7,7 @@ import {Astar} from './../../functions/MazeFunctions/MazeAlgorithms/AStar'
 import { createGrid } from '../../functions/MazeFunctions/createMaze';
 export default function MazeNavbar() {
     const {start ,inprocess ,setInprocess ,end ,maze,setMaze, mazeType,setMazeType,algorithm,setAlgorithm} = useMaze();
+    const ref= useRef(null);
     const handleStart =async() =>{
       if(inprocess||!maze)return;
          setInprocess(true);
@@ -24,6 +25,10 @@ export default function MazeNavbar() {
           if(possible){
                     let path =[];
                     let current =curr;
+                   
+                    if(algorithm==='DIJKSTRA'){
+                      ref.current = curr.distance;
+                    }
                     while(current){
                         path.push(current);
                         maze[current.row][current.col].isPath = true;
@@ -81,7 +86,7 @@ export default function MazeNavbar() {
 
 
     const handleReset =()=>{
-      console.log('a');
+    
       if(inprocess)return;
           for(let i =0;i<maze.length;i++){
                for(let j=0;j<maze[i].length;j++){
@@ -93,6 +98,7 @@ export default function MazeNavbar() {
           }
       setMaze(createGrid(start,end,21,41));
       setMazeType("Grid");
+      ref.current=null;
     }
 
   return (
@@ -120,6 +126,11 @@ export default function MazeNavbar() {
            <div className='flex items-end gap-4'>
             <button disabled ={inprocess} onClick={handleStart} className={`p-1 ${inprocess?"opacity-45":""}  text-lg text-center w-[100px] h-[40px] bg-green-500 border-2 rounded-md shadow-sm`}>Start</button>
             <button disabled ={inprocess} onClick={handleReset} className={`p-1 ${inprocess?"opacity-45":""}  text-lg text-center w-[100px] h-[40px] bg-red-500 border-2 rounded-md shadow-sm`}>Reset</button>
+           </div>
+           <div className='text-lg font-semibold'>
+               <p>Left click and drag for Walls</p>
+               <p>Right click and drag for weights</p>
+               {ref.current?<p>Minimum path cost : {ref.current}</p>:<></>}
            </div>
     </div>
   )

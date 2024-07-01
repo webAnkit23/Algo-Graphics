@@ -1,3 +1,5 @@
+import { isValidElement } from "react";
+
 const sleep =(delay)=>{
     return new Promise((resolve ,reject)=>{
         setTimeout(()=>{
@@ -22,7 +24,7 @@ export async function recursiveDivision(maze,startRow,startCol,endRowIndex ,endC
 
 
 async function divideHorizontal(maze,startRow,startCol,endRowIndex ,endColIndex,start,end){
-    console.log('h');
+
     if(endColIndex-startCol<=1||endRowIndex-startRow<=1)return;
 
     let randomRow = startRow+Math.floor(Math.random()*(endRowIndex-startRow-1)) +1;
@@ -43,7 +45,7 @@ async function divideHorizontal(maze,startRow,startCol,endRowIndex ,endColIndex,
 
 }
 async function divideVertical(maze,startRow,startCol,endRowIndex ,endColIndex,start,end){
- console.log('f');
+ 
  if(endColIndex-startCol<=1||endRowIndex-startRow<=1)return;
 
 
@@ -51,10 +53,10 @@ async function divideVertical(maze,startRow,startCol,endRowIndex ,endColIndex,st
     let randomCell =startRow +Math.floor(Math.random()*(endRowIndex-startRow +1)) ;
    
     for(let i=startRow ;i<=endRowIndex&&i<maze.length;i++){
-        if(i==randomCell||(i==start.row&&randomCol==start.col)||(i==end.row&&randomCol==end.col))continue;
+        if(i==randomCell||(i==start.row&&randomCol==start.col)||(i==end.row&&randomCol==end.col)||isNot(i,randomCol,maze))continue;
 
         
-            console.log(randomCol);
+            
                maze[i][randomCol].isWall = true;
                const element = document.getElementById(`rows-${i}&cols-${randomCol}`);
                element?.classList.add('wallAnimation');
@@ -68,7 +70,27 @@ async function divideVertical(maze,startRow,startCol,endRowIndex ,endColIndex,st
 }
 
 
+function isNot(row ,col , maze){
+   
+    if(isVaild(row-1,col-1 ,row-1,col+1,maze)&&maze[row-1][col-1].isWall&&maze[row-1][col+1].isWall){
+           return true;
+    }
+    if(isVaild(row-1,col-1 ,row+1,col-1,maze)&&maze[row-1][col-1].isWall&&maze[row+1][col-1].isWall){
+        return true;
+    }
+    if(isVaild(row+1,col-1 ,row+1,col+1,maze)&&maze[row+1][col-1].isWall&&maze[row+1][col+1].isWall){
+        return true;
+     }
+ if(isVaild(row-1,col+1 ,row+1,col+1,maze)&&maze[row-1][col+1].isWall&&maze[row+1][col+1].isWall){
+    return true;
+   }
 
+    return false;
+}
+function isVaild(row1,col1 ,row2,col2,maze){
+    if(row1<=0||row2<0||col1<=0||col2<0||row1>=maze.length||col1>=maze[0].length||row2>=maze.length||col2>=maze[0].length)return false;
+    return true;
+}
 
 
 
