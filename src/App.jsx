@@ -3,6 +3,7 @@ import './App.css'
 import NavBar from './components/NavBar'
 import MazePage from './components/MazeComponents/MazePage'
 import SortingPage from './components/SortingComponents/SortingPage'
+import Backtracker from './components/recursiveBacktracker/Backtracker'
 function App() {
   return (
     
@@ -17,7 +18,7 @@ function App() {
 
            <MazePage />
             <SortingPage />
-
+              <Backtracker />
             <div className='text-center mt-20 border-2 text-[30px] font-semibold text-red-500'>More Algorithms Coming Soon</div>
        </div>
 
