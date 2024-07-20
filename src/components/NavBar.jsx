@@ -41,8 +41,9 @@ export default function NavBar() {
     
   return (
     <div className='container-full bg-green-500 shadow-lg min-h-[70px] h-fit p-2'>
-        <div className='flex  flex-nowrap justify-between md:pl-5 md:pr-5 h-full'>
-            <h1 className='text-blue-700 md:text-[30px] text-[25px] font-semibold'>Algorithm visualizer</h1>  
+        <div className='flex justify-between h-full flex-nowrap md:pl-5 md:pr-5'>
+            <h1 className='text-blue-700 md:text-[30px] text-[25px] font-semibold'>Algorithm visualizer</h1> 
+            <button className='h-[40px] border-2 font-semibold  text-white rounded bg-gray-500 mt-2 p-2'><a href='https://suduko-lac.vercel.app'>Suduko Solver</a> </button> 
              <div>
                 {arr.map((row,i)=>(
                       <div key={i} className='h-[12px]'>

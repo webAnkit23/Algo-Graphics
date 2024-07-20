@@ -9,7 +9,7 @@ export default function Backtracker() {
 async function start(){
     if(running)return;
     setRunning(true);
-  await runTracking(grid ,{row:0,col:0},{row:0,col:0});
+  await runTracking(grid ,{row:Math.floor(Math.random()*20),col:Math.floor(Math.random()*35)});
   const newgrid = grid.slice();
   setGrid(newgrid);
   setRunning(false);
